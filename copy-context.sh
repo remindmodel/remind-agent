@@ -32,10 +32,12 @@ if [ "$REVERSE" = true ]; then
   echo "Copying context files from $REMIND_PATH back to remind-context..."
   cp "$REMIND_PATH/.github/copilot-instructions.md" "$CONTEXT_DIR/"
   cp -R "$REMIND_PATH/.github/instructions/" "$CONTEXT_DIR/"
+  cp -R "$REMIND_PATH/.github/prompts/" "$CONTEXT_DIR/"
   echo "Done. Don't forget to commit and push your changes!"
 else
   echo "Copying context files to $REMIND_PATH..."
   cp "$CONTEXT_DIR/copilot-instructions.md" "$REMIND_PATH/.github/"
   cp -R "$CONTEXT_DIR/instructions/" "$REMIND_PATH/.github/"
+  cp -R "$CONTEXT_DIR/prompts/" "$REMIND_PATH/.github/"
   echo "Done."
 fi
