@@ -2,6 +2,13 @@
 
 This repository contains GitHub Copilot context files for the REMIND codebase.
 
+## What are context files?
+
+Context files are Markdown files that instruct GitHub Copilot about a codebase - its
+structure, conventions, and how to respond. VS Code picks them up automatically from
+`.github/copilot-instructions.md` (repo-wide instructions), `.github/instructions/`
+(topic-specific instruction files) and `.github/prompts/` (task specific typical use cases)
+
 ## Why a separate repository?
 
 Git submodules would be the natural solution for keeping these files under independent
