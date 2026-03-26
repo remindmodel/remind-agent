@@ -109,3 +109,13 @@ Key packages and their roles:
 3. Check whether the installed version in `renv.lock` is current — a newer version may have the fix.
 4. Only escalate to assuming a REMIND-side bug if the package is behaving correctly per its own spec.
 5. Do **not** suggest cloning these repos locally — reference GitHub URLs only.
+
+## renv architecture (REMIND-specific)
+
+- There is **no `renv.lock` in the repo root**. The main renv library lives at `renv/library/` but has no lockfile — it is managed manually.
+- Lockfile snapshots are archived in `renv/archive/<timestamp>_renv.lock`.
+- At run start, `scripts/start/submit.R` snapshots the current main library into `output/<run>/renv.lock`, then calls `renv::restore()` inside the run folder.
+- Each run folder therefore has its **own self-contained renv** at `output/<run>/renv/library/`.
+- To inspect what a run actually loaded, check `output/<run>/renv/library/` — not the main library.
+- To open R with the run's renv: `renv::activate("<run_folder>")` or `cd` into the run folder (`.Rprofile` auto-activates).
+- `cfg$UseThisRenvLock` propagates a lockfile across cascade runs.
