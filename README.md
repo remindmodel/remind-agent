@@ -1,49 +1,101 @@
-# remind-context
+﻿# remind-context
 
-This repository contains GitHub Copilot context files for the REMIND codebase.
+AI-assistant context files for the [REMIND](https://github.com/remindmodel/remind)
+codebase. Consumed by **GitHub Copilot** (VS Code) and **Claude Code**.
 
-## What are context files?
+## What''s in here
 
-Context files are Markdown files that instruct GitHub Copilot about a codebase - its
-structure, conventions, and how to respond. VS Code picks them up automatically from
-`.github/copilot-instructions.md` (repo-wide instructions), `.github/instructions/`
-(topic-specific instruction files) and `.github/prompts/` (task specific typical use cases)
+- [``AGENT.md``](AGENT.md) — **single source of truth**: repo-wide instructions
+  (model overview, HPC environment, debugging protocol, renv workflow, …).
+  Imports the topic files below via ``@``-references.
+- [``instructions/``](instructions/) — topic-specific deep dives
+  (``gams.md``, ``r.md``, ``cicd.md``).
+- [``prompts/``](prompts/) — on-demand task prompts (e.g.
+  [``triage-failed-run.md``](prompts/triage-failed-run.md)). **Not** auto-loaded;
+  invoked explicitly as slash commands when needed.
+- [``copilot-instructions.md``](copilot-instructions.md) — thin shim
+  (``@AGENT.md``) so Copilot keeps working if anyone reads this repo directly.
+- ``bootstrap.sh`` / ``bootstrap.ps1`` — one-shot installer for REMIND checkouts.
 
-## Why a separate repository?
+## Deployment model
 
-Git submodules would be the natural solution for keeping these files under independent
-version control while having them available in the main codebase. However, two constraints
-make this impossible:
+``remind-context`` is **not** distributed with REMIND. Devs who want AI context
+opt in by adding it as a git submodule inside their REMIND checkout:
 
-1. VS Code requires Copilot context files to reside at the top level of the `.github/`
-   directory (i.e. `.github/copilot-instructions.md` and `.github/instructions/`)
-2. The `.github/` directory is already under version control in the main REMIND repository
-   (CI/CD workflows, etc.)
-
-A submodule cannot coexist with already-tracked files in the same directory, so the
-files are instead copied manually into the target codebase using `copy-context.sh`.
-
-## Usage
-
-Copy context files to a REMIND codebase using `copy-context.sh`. The default target
-is `/p/tmp/$USER/remind` (cluster scratch directory), but you can specify any path:
-
-```bash
-# Copy to default ../remind
-./copy-context.sh
-
-# Copy to a specific codebase
-./copy-context.sh ~/code/some_specific_remind_version
+```
+<remind>/
+├── .git/
+├── .github/
+│   └── copilot-instructions.md    <- pointer:  @../remind-context/AGENT.md
+├── AGENT.md                        <- pointer:  @remind-context/AGENT.md
+├── remind-context/                 <- this repo, as a submodule
+│   ├── AGENT.md
+│   ├── instructions/
+│   └── prompts/
+└── ...
 ```
 
-To bring changes made in a REMIND codebase back to this repository:
+Both Copilot and Claude Code resolve ``@``-imports transitively, so the two
+one-line pointer files pull in the full context without duplication.
+
+The submodule, ``.gitmodules``, and the pointer files stay **untracked in
+REMIND** — this is intentional and matches the previous "copy and ignore"
+workflow.
+
+## Install in a REMIND checkout
+
+### Linux / macOS
 
 ```bash
-# Reverse from default ../remind
-./copy-context.sh -r
-
-# Reverse from a specific codebase
-./copy-context.sh -r ~/code/some_specific_remind_version
+cd /path/to/remind
+/path/to/remind-context/bootstrap.sh
 ```
 
-The copied files will be untracked in the target codebase, which is intentional.
+### Windows
+
+```powershell
+cd C:\path\to\remind
+C:\path\to\remind-context\bootstrap.ps1
+```
+
+The script:
+
+1. Adds ``remind-context`` as a submodule at ``<remind>/remind-context``.
+2. Writes ``<remind>/AGENT.md`` and ``<remind>/.github/copilot-instructions.md``
+   pointer files (only if they don''t already exist).
+
+## Updating
+
+Pull the latest context into a REMIND checkout:
+
+```bash
+git submodule update --remote remind-context
+```
+
+## Editing context (round-trip)
+
+Submodules check out a detached HEAD by default. Move to a branch first:
+
+```bash
+cd <remind>/remind-context
+git checkout main
+# edit AGENT.md / instructions/*.md / prompts/*.md
+git commit -am "..."
+git push
+```
+
+Then either bump the pointer in your REMIND checkout
+(``git submodule update --remote remind-context`` from REMIND root) or just
+leave it — other devs pull on their own schedule.
+
+## Invoking prompts
+
+Prompts in [``prompts/``](prompts/) are **on-demand**, not auto-loaded.
+
+- **Copilot Chat**: place a ``.prompt.md`` copy under ``.github/prompts/`` in
+  REMIND, then run via ``/<name>`` in chat or the *Chat: Run Prompt* command.
+- **Claude Code**: shim under ``.claude/commands/<name>.md`` containing
+  ``@../../remind-context/prompts/<name>.md``, invoked as ``/<name>``.
+
+(Neither shim is created by ``bootstrap`` — add it manually if you want prompt
+parity, otherwise just open the prompt file and paste.)
