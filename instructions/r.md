@@ -27,3 +27,21 @@
 - Keep diffs minimal.
 - Propose one recommended implementation (plus at most one alternative if needed).
 - Include how to validate the change using existing commands (`make test`, or rerun `Rscript ...`).
+
+## Cluster R version
+- Cluster runs use **R 4.3.2**. Avoid R 4.4+-only constructs (e.g. base
+  `%||%`) in diagnostic snippets — they fail with
+  `could not find function "%||%"` on the cluster.
+
+## Working inside a run folder
+- A run's renv is self-contained at `output/<run>/renv/library/` with its own
+  `.Rprofile` that auto-activates when R starts in that directory.
+- To introspect a run's actual config or installed packages, `cd` into the
+  run folder *before* invoking `Rscript`. Don't try to load run-specific
+  state from the repo root — versions may have drifted since the run started.
+
+Example — resolve a run's config from inside the run folder:
+```sh
+cd output/<run>
+Rscript -e 'cfg <- gms::loadConfig("cfg.txt"); str(cfg[grep("<pattern>", names(cfg))])'
+```
