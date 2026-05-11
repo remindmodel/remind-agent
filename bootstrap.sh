@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 # Bootstrap remind-context inside a REMIND checkout.
 #
-# - Adds remind-context as a git submodule at <remind>/remind-context
-# - Writes two pointer files so Copilot and Claude Code pick up the context:
-#     <remind>/AGENT.md                       -> @remind-context/AGENT.md
-#     <remind>/.github/copilot-instructions.md -> @../remind-context/AGENT.md
+# remind-context is cloned as a plain (untracked) subdirectory of REMIND:
 #
-# The submodule, .gitmodules, and the pointer files are intentionally NOT
-# committed to REMIND. Add them to your local .git/info/exclude if needed.
+#   <remind>/remind-context/    <- this repo
+#   <remind>/AGENT.md           <- pointer: @remind-context/AGENT.md
+#   <remind>/.github/
+#       copilot-instructions.md <- pointer: @../remind-context/AGENT.md
+#
+# Run once per REMIND checkout. To update: git -C remind-context pull
 
 set -euo pipefail
 
@@ -22,33 +23,38 @@ fi
 cd "$REMIND_PATH"
 
 if [ ! -d "remind-context/.git" ] && [ ! -f "remind-context/.git" ]; then
-    echo "Adding remind-context submodule from $REPO_URL ..."
-    git submodule add "$REPO_URL" remind-context
-    git submodule update --init --recursive
+    echo "Cloning remind-context from $REPO_URL ..."
+    git clone "$REPO_URL" remind-context
 else
-    echo "remind-context submodule already present — updating ..."
-    git submodule update --init --recursive --remote remind-context
+    echo "remind-context already present — pulling ..."
+    git -C remind-context pull
+fi
+
+# Keep remind-context/ out of git status without touching committed .gitignore
+exclude='.git/info/exclude'
+if ! grep -qF 'remind-context/' "$exclude" 2>/dev/null; then
+    echo 'remind-context/' >> "$exclude"
 fi
 
 mkdir -p .github
 
 if [ ! -f AGENT.md ]; then
-    echo '@remind-context/AGENT.md' > AGENT.md
+    printf '@remind-context/AGENT.md' > AGENT.md
     echo "Wrote AGENT.md"
 fi
 
 if [ ! -f .github/copilot-instructions.md ]; then
-    echo '@../remind-context/AGENT.md' > .github/copilot-instructions.md
+    printf '@../remind-context/AGENT.md' > .github/copilot-instructions.md
     echo "Wrote .github/copilot-instructions.md"
 fi
 
-cat <<EOF
+cat <<'EOF'
 
 Done.
 
 Next steps:
-  - Pull updates later:   git submodule update --remote remind-context
-  - Edit context:         cd remind-context && git checkout main && \$EDITOR ...
-  - Do NOT commit remind-context/, .gitmodules, AGENT.md, or
+  - Pull updates later:  git -C remind-context pull
+  - Repeat bootstrap for each REMIND checkout you use.
+  - Do NOT commit remind-context/, AGENT.md, or
     .github/copilot-instructions.md to REMIND.
 EOF
