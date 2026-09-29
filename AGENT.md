@@ -82,10 +82,9 @@ When a parameter looks wrong:
    ```
 
 ## R conventions (defaults)
-- Prefer tidyverse.
-- Avoid `data.table`. Prefer `tibble`/`dplyr`/`readr`.
-- Base R is OK as a fallback if it reduces complexity.
-- Respect `renv.lock` and existing dependency choices.
+- Tidyverse-first (`dplyr`/`tidyr`/`purrr`/`stringr`/`glue`); avoid `data.table`; base R
+  only where no tidyverse equivalent exists. Respect `renv.lock`.
+- Full conventions, incl. the R 4.3.2 cluster caveat, are in `instructions/r.md` (imported below).
 
 ## How to respond (style contract)
 - Be concise by default (aim for 5–12 bullets total).
@@ -225,3 +224,11 @@ Key packages and their roles:
 @instructions/gams.md
 @instructions/r.md
 @instructions/cicd.md
+@instructions/gdx.md
+
+## Playbooks (prompts/)
+Paths are relative to the REMIND root (this repo is deployed as `remind-context/`).
+- `remind-context/prompts/triage-failed-run.md` — triage a failed HPC/Slurm run from its logs.
+- `remind-context/prompts/inspect-verify-gdx.md` — inspect a large `.gdx` safely, or verify a gdx
+  write-path change end-to-end (R round-trip -> on-disk zeros -> GAMS `execute_loadpoint`).
+  Reusable tool: `remind-context/scripts/gdx_inspect.R`.

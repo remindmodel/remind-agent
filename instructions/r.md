@@ -12,11 +12,16 @@
   - upstream simulation/model (no/invalid `.mif` produced), or
   - downstream parsing/plotting/PDF generation.
 
-## R ecosystem conventions
-- Prefer tidyverse.
-- Avoid `data.table`. Prefer `tibble` + `dplyr` + `readr`.
-- Base R is acceptable as fallback.
-- Respect `renv.lock` and avoid introducing new dependencies unless necessary.
+## R ecosystem conventions — tidyverse-first
+- Go **all in on the tidyverse**: `dplyr` / `tidyr` / `purrr` / `stringr` / `tibble`,
+  `glue` for strings, and the native pipe `|>` (or `%>%`). Concretely prefer:
+  - `purrr::map`/`walk` over `*apply`, `Filter`, and `for`-accumulate loops;
+  - `stringr::str_*` over `grepl`/`sub`/`grep`;
+  - `glue::glue()` over `sprintf`/`paste0`;
+  - a built-and-`print()`ed `tibble` over hand-aligned `sprintf` columns;
+  - `dplyr::summarise`/`count`/`n_distinct` + `tidyr::pivot_wider` over manual aggregation.
+- Reach for base R only where no tidyverse equivalent exists — and note it in a comment.
+- Avoid `data.table`. Respect `renv.lock` (the tidyverse core is already in the stack).
 
 ## Working with large data/logs
 - Avoid printing large tables/logs.
@@ -29,9 +34,9 @@
 - Include how to validate the change using existing commands (`make test`, or rerun `Rscript ...`).
 
 ## Cluster R version
-- Cluster runs use **R 4.3.2**. Avoid R 4.4+-only constructs (e.g. base
-  `%||%`) in diagnostic snippets — they fail with
-  `could not find function "%||%"` on the cluster.
+- Cluster runs use **R 4.3.2**; avoid R 4.4+-only constructs in diagnostic snippets. The
+  main trap is the *base* `%||%` (4.4+), which fails with `could not find function "%||%"` —
+  use `rlang::%||%` (load `rlang`, or a tidyverse package that attaches it) instead.
 
 ## Working inside a run folder
 - A run's renv is self-contained at `output/<run>/renv/library/` with its own
