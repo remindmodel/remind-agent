@@ -9,10 +9,13 @@ codebase. Consumed by **GitHub Copilot** (VS Code) and **Claude Code**.
   (model overview, HPC environment, debugging protocol, renv workflow, …).
   Imports the topic files below via `@`-references.
 - [`instructions/`](instructions/) — topic-specific deep dives
-  (`gams.md`, `r.md`, `cicd.md`).
-- [`prompts/`](prompts/) — on-demand task prompts (e.g.
-  [`triage-failed-run.md`](prompts/triage-failed-run.md)). **Not** auto-loaded;
+  (`gams.md`, `r.md`, `cicd.md`, `gdx.md`).
+- [`prompts/`](prompts/) — on-demand task prompts
+  ([`triage-failed-run.md`](prompts/triage-failed-run.md),
+  [`inspect-verify-gdx.md`](prompts/inspect-verify-gdx.md)). **Not** auto-loaded;
   invoked explicitly as slash commands when needed.
+- [`scripts/`](scripts/) — reusable tools referenced by the prompts (e.g.
+  [`gdx_inspect.R`](scripts/gdx_inspect.R), a context-safe GDX inspector).
 - `bootstrap.sh` / `bootstrap.ps1` — one-shot installer for REMIND checkouts.
 
 ## Deployment model
@@ -29,7 +32,8 @@ subdirectory — not committed, not a submodule, just a local clone:
 ├── remind-context/              <- this repo (untracked, in .git/info/exclude)
 │   ├── AGENT.md
 │   ├── instructions/
-│   └── prompts/
+│   ├── prompts/
+│   └── scripts/
 └── ...
 ```
 
@@ -54,7 +58,7 @@ git clone https://github.com/tonnrueter/remind-context.git remind-context
 #### Linux / macOS
 
 ```bash
-remind-context/bootstrap.sh
+bash remind-context/bootstrap.sh
 ```
 
 #### Windows
