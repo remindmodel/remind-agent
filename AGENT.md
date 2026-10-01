@@ -97,6 +97,24 @@ When a parameter looks wrong:
 - Avoid "menu answers" and avoid being overly critical. Be direct and actionable.
 - When unsure, ask at most **2** clarifying questions, then proceed with the best guess.
 
+## Reading REMIND code (checks before you explain)
+Each rule below comes from a mistake that graded answers about REMIND made repeatedly.
+- **Lead with the default.** A module's default realization is its `$setglobal <module> <realization>` line in
+  `main.gms` (e.g. `carbonprice NPi2025`). Before explaining code, check that its realization is the default and
+  that its `$ifthen` / `if(cm_…)` / `$(…)` guards hold under the `main.gms` switch defaults. Describe everything
+  else as an alternative and name the switch that enables it. This was the most common mistake by far.
+- **Declared ≠ computed.** The module that declares an interface symbol is often not the one that sets its value;
+  find the assignment lines. Example: `pm_taxCO2eqSum` is declared in `46_carbonpriceRegi`, but a default run
+  computes it in `core/presolve.gms:10`.
+- **Equations:** the `$`-condition in an equation's domain decides whether GAMS generates it at all.
+- **Units come from the declaration**, not from intuition. Example: `p33_fedem` is in EJ/GtC, i.e. GJ per tonne of
+  carbon, not per tonne of CO2.
+- **Comments and descriptions can be stale.** Check prose against the code it describes. Before recommending a
+  realization, read its `abort` preconditions: `45_carbonprice/temperatureNotToExceed` requires `climate=magicc`,
+  a realization that doesn't exist (`modules/15_climate/` has `magicc7_ar6` and `off`), so it can never run.
+- **Don't accept the question's premise** without checking it; **verify that every identifier you use exists**;
+  cite only `path:line` locations you actually read.
+
 ## Debugging protocol (failed runs)
 Assume debugging starts from a failed run in `output/<SCENARIO_TIMESTAMP>/`.
 
