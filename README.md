@@ -1,7 +1,7 @@
 # remind-context
 
 AI-assistant context files for the [REMIND](https://github.com/remindmodel/remind)
-codebase. Consumed by **GitHub Copilot** (VS Code) and **Claude Code**.
+codebase, loaded by Claude Code through a `CLAUDE.md` pointer (see *Install*).
 
 ## What's in here
 
@@ -72,10 +72,6 @@ git push
 
 Prompts in [`prompts/`](prompts/) are **on-demand**, not auto-loaded.
 
-- **Copilot Chat**: place a `.prompt.md` copy under `.github/prompts/` in
-  REMIND, then run via `/<name>` in chat or the *Chat: Run Prompt* command.
-- **Claude Code**: shim under `.claude/commands/<name>.md` containing
-  `@../../remind-context/prompts/<name>.md`, invoked as `/<name>`.
-
-(Neither shim is created by `bootstrap` — add it manually if you want prompt
-parity, otherwise just open the prompt file and paste.)
+To invoke one as `/<name>`, add a shim `.claude/commands/<name>.md` in REMIND
+containing `@../../remind-context/prompts/<name>.md`, or just open the prompt
+file and paste it.

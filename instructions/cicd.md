@@ -12,7 +12,7 @@
 - Avoid adding steps that upload or print massive logs by default.
 - Prefer concise failure output with pointers to the relevant section.
 
-## Working with Copilot
+## Working style for structural changes
 
 ### Ask clarifying questions before proposing solutions
 Before proposing any structural change to the repo (adding submodules, moving files,
