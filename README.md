@@ -50,6 +50,10 @@ printf 'remind-context/\nCLAUDE.md\n' >> .git/info/exclude
 If the checkout already has a `CLAUDE.md`, add the `@remind-context/AGENT.md`
 line to it instead of overwriting it.
 
+Optional companion: [remind-rag](https://github.com/tonnrueter/remind-rag), a
+local search index over the REMIND source served as MCP tools. The context
+works without it; `AGENT.md` says how to use it when it is connected.
+
 ## Updating
 
 Pull the latest context into a checkout:

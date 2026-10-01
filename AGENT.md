@@ -115,6 +115,12 @@ Each rule below comes from a mistake that graded answers about REMIND made repea
 - **Don't accept the question's premise** without checking it; **verify that every identifier you use exists**;
   cite only `path:line` locations you actually read.
 
+### If the `remind-rag` tools are available
+When the `remind-rag` MCP server is connected (`search`, `get_symbol`, `get_switch`, `get_module`,
+`get_scenario`, `get_links`), use it for the checks above: its results mark whether code runs in a default run
+and separate where a symbol is declared, assigned and used. Without it, grep `main.gms` for defaults and the
+module's `realization.gms` for its realizations. The rules apply either way.
+
 ## Debugging protocol (failed runs)
 Assume debugging starts from a failed run in `output/<SCENARIO_TIMESTAMP>/`.
 
