@@ -16,20 +16,17 @@ codebase. Consumed by **GitHub Copilot** (VS Code) and **Claude Code**.
   invoked explicitly as slash commands when needed.
 - [`scripts/`](scripts/) — reusable tools referenced by the prompts (e.g.
   [`gdx_inspect.R`](scripts/gdx_inspect.R), a context-safe GDX inspector).
-- `bootstrap.sh` / `bootstrap.ps1` — one-shot installer for REMIND checkouts.
 
 ## Deployment model
 
 `remind-context` lives **inside** each REMIND checkout as a plain untracked
-subdirectory — not committed, not a submodule, just a local clone:
+clone. A one-line `CLAUDE.md` in the REMIND root points to it; Claude Code
+reads `CLAUDE.md` (not `AGENT.md`) and resolves `@`-imports transitively:
 
 ```
 <remind>/
-├── .git/
-├── .github/
-│   └── copilot-instructions.md  <- pointer: @../remind-context/AGENT.md
-├── AGENT.md                     <- pointer: @remind-context/AGENT.md
-├── remind-context/              <- this repo (untracked, in .git/info/exclude)
+├── CLAUDE.md          <- one line: @remind-context/AGENT.md
+├── remind-context/    <- this repo
 │   ├── AGENT.md
 │   ├── instructions/
 │   ├── prompts/
@@ -37,42 +34,21 @@ subdirectory — not committed, not a submodule, just a local clone:
 └── ...
 ```
 
-Both Copilot and Claude Code resolve `@`-imports transitively, so the two
-one-line pointer files pull in the full context without duplication.
-
-**Multiple REMIND checkouts:** run bootstrap once per checkout — each gets its
-own `remind-context/` clone. Update each independently with
-`git -C remind-context pull`.
+Both stay out of REMIND's git status via `.git/info/exclude`. A pointer, not a
+copy, so pulling this repo updates the context.
 
 ## Install
 
-### 1. Clone this repo into your REMIND checkout
+In the root of each REMIND checkout:
 
 ```bash
-cd /path/to/remind
 git clone https://github.com/tonnrueter/remind-context.git remind-context
+echo '@remind-context/AGENT.md' > CLAUDE.md
+printf 'remind-context/\nCLAUDE.md\n' >> .git/info/exclude
 ```
 
-### 2. Run the bootstrap script
-
-#### Linux / macOS
-
-```bash
-bash remind-context/bootstrap.sh
-```
-
-#### Windows
-
-```powershell
-remind-context\bootstrap.ps1
-```
-
-The script:
-
-1. Pulls the latest context (or clones if `remind-context/` isn't there yet).
-2. Adds `remind-context/` to `.git/info/exclude` so it stays out of git status.
-3. Writes `AGENT.md` and `.github/copilot-instructions.md` pointer files
-   (only if they don't already exist).
+If the checkout already has a `CLAUDE.md`, add the `@remind-context/AGENT.md`
+line to it instead of overwriting it.
 
 ## Updating
 
