@@ -219,7 +219,7 @@ Key packages and their roles:
 | `luscale` | Scaling/aggregation helpers | https://github.com/pik-piam/luscale |
 | `lusweave` | PDF report generation | https://github.com/pik-piam/lusweave |
 | `madrat` | Data preprocessing framework | https://github.com/pik-piam/madrat |
-| `gms` | GAMS/R interface utilities | https://github.com/pik-piam/gms |
+| `gms` | GAMS modularization toolkit — provides the module/realization code structure and naming conventions that MAgPIE and REMIND are built on; monitors compliance with modular coding guidelines | https://github.com/pik-piam/gms |
 | `quitte` | Tidy data helpers for IAM data | https://github.com/pik-piam/quitte |
 | `rmndt` | Transport data utilities | https://github.com/pik-piam/rmndt |
 | `remindClimateAssessment` | Climate assessment / MAGICC integration | https://github.com/pik-piam/remindClimateAssessment |
