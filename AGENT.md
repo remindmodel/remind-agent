@@ -118,6 +118,13 @@ Each rule below comes from a mistake that graded answers about REMIND made repea
 ## Debugging protocol (failed runs)
 Assume debugging starts from a failed run in `output/<SCENARIO_TIMESTAMP>/`.
 
+REMIND's own guide, written by its developers from experience, is `tutorials/10_DebuggingREMIND.md`. Read the
+matching case there before giving REMIND-specific advice instead of improvising it: did not start, error
+(compilation / execution / missing gdx), infeasibilities (`p80_repy` in `full.lst`, modelstat codes,
+`cm_abortOnConsecFail`, infeasibility spreading between regions through trade), non-convergence, debug runs
+(`--debug --testOneRegi`, `listinfes`), and watching CONOPT (`conoptspy`, `gmsgrid.log`). On the PIK cluster,
+`rs` / `modelstats::loopRuns('.')` gives a run's state.
+
 ### Critical note: do not anchor on the bottom of the log
 - The last lines often contain solver/model status such as "infeasible". This can be a legitimate model outcome.
 - Treat the tail as **symptom confirmation**, not necessarily root cause.
