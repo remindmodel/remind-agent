@@ -1,0 +1,31 @@
+# Python (tirf_lst.py, scenario_switches.py, ...)
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# R (gdx_inspect.R)
+.Rhistory
+.RData
+.Rdata
+.Ruserdata
+.Rproj.user/
+
+# Editors / IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS cruft
+.DS_Store
+Thumbs.db
