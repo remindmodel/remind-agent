@@ -268,3 +268,7 @@ Paths are relative to the REMIND root (this repo is deployed as `remind-context/
 - `remind-context/prompts/inspect-verify-gdx.md` — inspect a large `.gdx` safely, or verify a gdx
   write-path change end-to-end (R round-trip -> on-disk zeros -> GAMS `execute_loadpoint`).
   Reusable tool: `remind-context/scripts/gdx_inspect.R`.
+- `remind-context/prompts/inspect-tirf.md` — diagnose a corrupted climate impulse response (TIRF
+  spike / negative values / sign-flipped carbon price) by pulling the per-iteration
+  `pm_temperatureImpulseResponseCO2` tables out of a `full.lst`.
+  Reusable tool: `remind-context/scripts/tirf_lst.py`.
