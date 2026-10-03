@@ -272,3 +272,7 @@ Paths are relative to the REMIND root (this repo is deployed as `remind-context/
   spike / negative values / sign-flipped carbon price) by pulling the per-iteration
   `pm_temperatureImpulseResponseCO2` tables out of a `full.lst`.
   Reusable tool: `remind-context/scripts/tirf_lst.py`.
+- `remind-context/prompts/inspect-scenario-config.md` — list the non-default switches a
+  `scenario_config*.csv` actually sets, resolving each default from the SAME checkout (so
+  fork-only switches like `cm_scc_weight_matrix` resolve). Reusable tool:
+  `remind-context/scripts/scenario_switches.py`.
