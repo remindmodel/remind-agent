@@ -2,6 +2,10 @@
 """
 nash_converge.py - diagnose a non-converged REMIND Nash run from nash_info_convergence.csv.
 
+Why a script (no native equivalent): `nashstat` shows only the LAST iteration; `dumpgdx` shows only
+the final state. This reads the per-ITERATION trajectory from the CSV (oscillation vs stall,
+sign-flips, price stability).
+
 Use when a run hit the iteration ceiling (cm_iteration_max, 100 in Nash mode) with Conv=not_converged
 (Case F in the REMIND debugging guide). The question is always: WHICH market won't clear, is it
 oscillating or just slow, and is the economic *answer* (prices / SCC) stable despite it.
@@ -21,13 +25,13 @@ This CSV is self-contained (no gdx / piam module needed) - just a python with pa
   /p/projects/rd3mod/python/environments/climate-assessment/bin/python
 
 What this tool does NOT have (read it from fulldata.gdx with dumpgdx - see
-prompts/diagnose-nonconvergence.md): the tolerance values (p80_surplusMaxTolerance), which criteria
+the debug-remind-run skill's reference/nonconvergence.md): the tolerance values (p80_surplusMaxTolerance), which criteria
 are unmet (p80_messageShow), the failing (year,market) list (p80_messageFailedMarket), per-region
 solve status (nashstat), and whether a blocking market sits at a variable bound (binding => the
 imbalance is trade tension, not a solver limit).
 
 Usage:
-  <python-with-pandas> remind-context/scripts/nash_converge.py NASH_CSV [options]
+  <python-with-pandas> remind-context/skills/debug-remind-run/scripts/nash_converge.py NASH_CSV [options]
     (default)         --summary
     --summary         worst market surplus per iteration (which market/year drives non-convergence),
                       the convergence trajectory (stall vs oscillation), and the final-iteration

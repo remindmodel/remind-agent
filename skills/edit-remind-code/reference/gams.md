@@ -1,6 +1,6 @@
 # GAMS instructions (applies to `main.gms`, `core/`, `modules/`)
 
-Before explaining what GAMS code does, apply the checks in *Reading REMIND code* (`AGENT.md`): default
+Before explaining what GAMS code does, apply the *Reading REMIND code* checks in the `edit-remind-code` SKILL.md: default
 realization and switch guards, declared vs computed, equation conditions, units, preconditions.
 
 ## Change strategy
@@ -9,5 +9,5 @@ realization and switch guards, declared vs computed, equation conditions, units,
 - Prefer patterns already present in the codebase (follow local conventions).
 
 ## Debugging
-Follow the *Debugging protocol* in `AGENT.md`. If a fix depends on a hypothesis (e.g., infeasibility vs
+Follow the debugging protocol in the `debug-remind-run` skill. If a fix depends on a hypothesis (e.g., infeasibility vs
 solver/license vs missing include), label it and request one targeted log excerpt to confirm.

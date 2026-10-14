@@ -2,7 +2,11 @@
 
 Applies whenever a `.gdx` file crosses the GAMS/R boundary — inspecting one,
 or changing a script that writes/reads it. Companion playbook:
-`remind-context/prompts/inspect-verify-gdx.md`; tool: `remind-context/scripts/gdx_inspect.R`.
+`remind-context/skills/inspect-remind-gdx/reference/verify-gdx.md`; tool: `remind-context/skills/inspect-remind-gdx/scripts/gdx_inspect.R`.
+
+**First reach: native tools** — `gdxdump <file>` (symbol inventory, no records) and
+`dumpgdx <file> <symbol> "<regex>"` (filtered values); `gdx_inspect.R` is the escalation for bounded
+structural analytics on a huge symbol. The facts below govern the *content* once you read records.
 
 ## GDX is sparse — mind the zeros
 - A GAMS parameter cell equal to 0 is normally **not stored**; 0 is the default on read.
@@ -26,7 +30,7 @@ or changing a script that writes/reads it. Companion playbook:
 ## `tall` is annual
 - `tall` = every year 1900-3000 (`core/sets.gms`). Parameters over `(tall, ...)` — especially
   `(tall, tall)` like `pm_temperatureImpulseResponseCO2` — are annual and can be huge
-  (~50k records, triangular). Never dump them; use `remind-context/scripts/gdx_inspect.R`.
+  (~50k records, triangular). Never dump them; use `remind-context/skills/inspect-remind-gdx/scripts/gdx_inspect.R`.
 
 ## Reading gdx in R (gamstransfer)
 - The R6 `Container` has **no `[[` accessor**; use `container$getSymbols(name)[[1]]`.

@@ -18,7 +18,7 @@ Shell prep: needs a python with pandas. The climate-assessment conda env has it:
 `/p/projects/rd3mod/python/environments/climate-assessment/bin/python`.
 
 ## Tool
-`<python-with-pandas> remind-context/scripts/tirf_lst.py <full.lst> [option]`
+`<python-with-pandas> remind-context/skills/debug-remind-run/scripts/tirf_lst.py <full.lst> [option]`
 - (default) `--summary` — one row per iteration: `idx iter lst_line nNonzero nNeg min max allzero`,
   then the **first corrupted iteration** (first with `nNeg > 0`). Start here.
 - `--pulse-year Y` — TIRF vs period for pulse year `Y` across **all** iterations (the
@@ -39,7 +39,7 @@ Shell prep: needs a python with pandas. The climate-assessment conda env has it:
 ## Cross-check against the gdx (exact values)
 `pm_magicc_temperatureImpulseResponse.gdx` (written by `climateAssessmentImpulseResponse.R`)
 holds the exact interpolated TIRF. Inspect it with the gdx playbook
-(`remind-context/prompts/inspect-verify-gdx.md`, tool `gdx_inspect.R`); the parameter is over
+(the `inspect-remind-gdx` skill's `verify-gdx.md`, tool `gdx_inspect.R`); the parameter is over
 `(tall, tall)` and is large — never dump it, use the tool. The R script now also guards the
 invariant (`tirf > 0` for `period >= year_pulse`) and aborts before writing a poisoned gdx, so a
 run that tripped the guard will have **no** gdx and a clear message in `log_climate.txt`.

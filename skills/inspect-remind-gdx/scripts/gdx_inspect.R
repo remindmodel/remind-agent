@@ -1,6 +1,11 @@
 #!/usr/bin/env Rscript
 # gdx_inspect.R -- context-safe structural summary of a (potentially huge) GDX file.
 #
+# Why over native tools: `gdxdump <file>` (symbol inventory, no records) and
+# `dumpgdx <file> <sym> "<regex>"` (filtered values) are the first reach. Use THIS when you need
+# bounded structural analytics -- per-dim extent, sparsity, triangularity -- on a huge / (tall,tall)
+# symbol in one shot. (Under review: may retire if the native tools suffice.)
+#
 # Two axes of "huge" are guarded:
 #   * RECORDS -- metadata read first (records = FALSE); records loaded for ONE symbol at a time.
 #   * SYMBOLS -- a model GDX (fulldata.gdx) has ~1700 symbols. Default output is a class-count

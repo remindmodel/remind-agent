@@ -2,7 +2,7 @@
 
 Use when: (a) you need the structure of a `.gdx` too big to dump — especially
 `fulldata.gdx` (~1700 symbols, tens of MB), or (b) an R script's gdx writer changed
-and you must prove the GAMS side still loads it. Underlying facts: `remind-context/instructions/gdx.md`.
+and you must prove the GAMS side still loads it. Underlying facts: this skill's `reference/gdx.md`.
 
 Shell prep: `source /p/system/modulefiles/defaults/piam/module_load_piam`
 (confirm `LOADEDMODULES` is non-empty and `Rscript`/`gams` resolve; R is 4.3.2).
@@ -14,7 +14,10 @@ Shell prep: `source /p/system/modulefiles/defaults/piam/module_load_piam`
   parameter. Output size must be ~O(1) in file size.
 
 ## A. Inspect
-`Rscript remind-context/scripts/gdx_inspect.R <file.gdx> [symbol] [--grep=<regex>] [--list]`
+First reach for native tools: `gdxdump <file.gdx>` for the symbol inventory (no records) and
+`dumpgdx <file.gdx> <symbol> "<regex>"` for a few filtered values. Use `gdx_inspect.R` below when you
+need bounded structural analytics (per-dim extent, sparsity, triangularity) on a huge symbol:
+`Rscript remind-context/skills/inspect-remind-gdx/scripts/gdx_inspect.R <file.gdx> [symbol] [--grep=<regex>] [--list]`
 - Bare on a model gdx: class-count headline + "narrow it down" hints (safe on `fulldata.gdx`).
 - `--grep=<re>` or an exact `symbol`: filtered inventory + per-symbol deep-dive — dims,
   per-dimension extent, value summary, fill/sparsity, triangularity, adaptive shape map.

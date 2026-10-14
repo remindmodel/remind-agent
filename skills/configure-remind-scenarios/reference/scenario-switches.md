@@ -17,7 +17,7 @@ switches a feature branch added, e.g. `cm_scc_weight_matrix`, `cm_dr_scc_scen`.
 Shell prep: none — plain `python3`, standard library only.
 
 ## Tool
-`python3 remind-context/scripts/scenario_switches.py CONFIG.csv [options]`
+`python3 remind-context/skills/configure-remind-scenarios/scripts/scenario_switches.py CONFIG.csv [options]`
 - (default) only rows with `start == 1`, listing each non-default switch as `name  value  (default: d)`.
 - `--all` — every scenario row, not just the queued ones.
 - `--scenario NAME` — only this scenario title (repeatable).

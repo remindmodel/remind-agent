@@ -2,6 +2,9 @@
 """
 tirf_lst.py - inspect pm_temperatureImpulseResponseCO2 display tables inside a GAMS full.lst.
 
+Why a script (no native equivalent): the gdx holds only the LAST TIRF recompute; the per-iteration
+history lives only in full.lst display tables. Fragile -- tied to the GAMS print format.
+
 REMIND recomputes the climate impulse response (TIRF) each iteration (iter <=10, then every 5th;
 see modules/15_climate/magicc7_ar6/postsolve.gms) and `display`s pm_temperatureImpulseResponseCO2 in
 the SCC / internalizeDamages postsolve block. So a run's full.lst accumulates ONE 2-D table per
@@ -26,7 +29,7 @@ GAMS display shape handled:
 
 Usage (run with a python that has pandas, e.g. the climate-assessment conda env):
   /p/projects/rd3mod/python/environments/climate-assessment/bin/python \
-      remind-context/scripts/tirf_lst.py FULL_LST [options]
+      remind-context/skills/debug-remind-run/scripts/tirf_lst.py FULL_LST [options]
     (default)            --summary
     --summary            one row per iteration: idx iter lst_line nNonzero nNeg min max allzero
     --iter N             dump the table of iteration N (period x pulse_year), strided for the terminal

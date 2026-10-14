@@ -2,6 +2,10 @@
 """
 scenario_switches.py - list the NON-DEFAULT switches in a REMIND scenario config.
 
+Why a script (no CLI equivalent): diffs a scenario_config against the checkout's OWN defaults.
+NOTE: regex-parses main.gms for defaults -- can drift from gms::readDefaultConfig(); candidate to
+rebuild on gms/lucode2.
+
 A REMIND scenario config (config/scenario_config*.csv, ';'-separated) has one column per switch
 and one row per scenario. An EMPTY cell means "inherit the default"; a non-empty cell OVERRIDES
 the default. This tool resolves each switch's default from the SAME REMIND checkout the config
