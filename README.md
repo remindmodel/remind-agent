@@ -1,60 +1,60 @@
-# remind-context
+# remind-agent
 
-AI-assistant context for the [REMIND](https://github.com/remindmodel/remind) model: a lean
-always-on `CLAUDE.md` plus four Claude Code **skills** that auto-load by task.
+AI-assistant context for the [REMIND](https://github.com/remindmodel/remind) model, packaged as a
+self-contained **`.claude/`** bundle: a lean always-on `CLAUDE.md` plus four task skills that
+auto-load by task, their reference docs and scripts, and optional slash-command shortcuts.
 
 ## What's in here
 
-- [`CLAUDE.md`](CLAUDE.md) — always-on base: HPC/safety rules, data hygiene (native-tools-first),
-  and a compact REMIND orientation. Everything else loads only when a task calls for it.
-- [`skills/`](skills/) — four task skills, each a `SKILL.md` + its own `reference/` docs + `scripts/`:
-  - `debug-remind-run` — diagnose a failed/non-converged run (Cases A–F, non-convergence, TIRF,
-    climate). Scripts: `nash_converge.py`, `tirf_lst.py`.
-  - `inspect-remind-gdx` — inspect a gdx / verify a gdx writer change. Script: `gdx_inspect.R`.
-  - `configure-remind-scenarios` — author/review scenario configs. Script: `scenario_switches.py`.
+- `CLAUDE.md` — always-on base: HPC/safety rules, data hygiene (native-tools-first), and a compact
+  REMIND orientation.
+- `skills/` — four task skills, each a `SKILL.md` + `reference/` + (where useful) `scripts/`:
+  - `debug-remind-run` — diagnose a failed/non-converged run (Cases A–F, non-convergence, TIRF).
+  - `inspect-remind-gdx` — inspect a gdx / verify a gdx writer change.
+  - `configure-remind-scenarios` — author/review scenario configs.
   - `edit-remind-code` — read/change GAMS/R code, compile-after-edit, pik-piam/renv.
-- [`commands/`](commands/) — optional `/shortcuts` that force a specific playbook when you don't
-  want to wait for a skill to auto-trigger.
+- `commands/` — optional `/shortcuts` that jump straight into a skill's playbook.
+- `scratch/` — working dir for agent temp files (contents gitignored).
 
 ## Deployment
 
-`remind-context` lives inside each REMIND checkout as an untracked clone. Symlink its pieces into
-the places Claude Code discovers them (so `git pull` keeps the deployed context current), and keep
-them out of REMIND's git. From the REMIND checkout root:
+The repo **is** the `.claude/` directory. From the root of a REMIND checkout:
 
 ```bash
-git clone https://github.com/tonnrueter/remind-context.git remind-context
-
-# always-on base (or append its contents to an existing CLAUDE.md)
-ln -s remind-context/CLAUDE.md CLAUDE.md
-
-# skills + commands
-mkdir -p .claude/skills .claude/commands
-for s in remind-context/skills/*/; do ln -s "../../$s" ".claude/skills/$(basename "$s")"; done
-for c in remind-context/commands/*.md; do ln -s "../../$c" ".claude/commands/$(basename "$c")"; done
-
-# keep all of it out of REMIND's git
-printf 'remind-context/\nCLAUDE.md\n.claude/\n' >> .git/info/exclude
+git clone https://github.com/tonnrueter/remind-agent.git .claude
+printf '.claude/\n' >> .git/info/exclude     # keep it out of REMIND's git
+rm -f CLAUDE.md                              # drop any stale root CLAUDE.md pointer, if present
 ```
 
-Skills are discovered at `.claude/skills/<name>/SKILL.md` — verify that path against your Claude
-Code version before relying on the exact symlink commands above.
+That's the whole install — Claude Code discovers `.claude/CLAUDE.md`, `.claude/skills/`, and
+`.claude/commands/` natively. No symlinks, no `@`-imports.
 
-Optional companion: [remind-rag](https://github.com/tonnrueter/remind-rag), a local search index
-over the REMIND source served as MCP tools. The context works without it.
+Optional: browse the bundle under a friendlier name with a **cosmetic** alias (tools still read the
+real `.claude/`, so it never sits in a discovery path):
 
-## Scope
+```bash
+ln -s .claude remind-agent
+```
 
-This repo is **REMIND-only**. Cross-project, machine-specific skills (e.g. madrat development,
-general R dev) are personal — keep them in your own `~/.claude/skills/`, not here.
-
-## Scratch
-
-Agent temp files, intermediate outputs, and scratch scripts go in `scratch/` (gitignored). Delete
-them when the task is done; move a report you want to keep out of `scratch/`.
+Do **not** do the reverse (`ln -s remind-agent .claude`): a symlinked `.claude` currently breaks
+skill invocation in Claude Code (`/skill` → `Unknown skill`).
 
 ## Updating
 
 ```bash
-git -C remind-context pull    # symlinked deployments pick it up automatically
+git -C .claude pull
 ```
+
+## Portability (other agents)
+
+The content is tool-neutral. **opencode** already reads `.claude/skills/` natively, so the skills
+work there with no change — add a root `AGENTS.md` (or an `opencode.json` instructions entry
+pointing at `.claude/CLAUDE.md`) for its always-on memory. **qwen-code** reads `AGENTS.md` / `QWEN.md`
+the same way. The always-on file is kept as `CLAUDE.md` because it always loads; `AGENTS.md` is the
+portable alternative but only loads on Claude Code ≥2.1.277 and is suppressed by any `CLAUDE.md`
+above it.
+
+## Scope
+
+REMIND-only. Cross-project, machine-specific skills (madrat development, general R dev) are
+personal — keep them in your own `~/.claude/skills/`, not in this shared bundle.

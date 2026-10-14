@@ -30,5 +30,9 @@ env/
 .DS_Store
 Thumbs.db
 
-# Agent scratch / temp files
-scratch/
+# Agent scratch / temp files — folder ships (via .gitkeep), contents ignored
+scratch/*
+!scratch/.gitkeep
+
+# Claude Code per-project runtime (this repo is deployed as .claude/)
+settings.local.json

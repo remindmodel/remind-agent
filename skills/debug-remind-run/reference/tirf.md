@@ -18,7 +18,7 @@ Shell prep: needs a python with pandas. The climate-assessment conda env has it:
 `/p/projects/rd3mod/python/environments/climate-assessment/bin/python`.
 
 ## Tool
-`<python-with-pandas> remind-context/skills/debug-remind-run/scripts/tirf_lst.py <full.lst> [option]`
+`<python-with-pandas> .claude/skills/debug-remind-run/scripts/tirf_lst.py <full.lst> [option]`
 - (default) `--summary` — one row per iteration: `idx iter lst_line nNonzero nNeg min max allzero`,
   then the **first corrupted iteration** (first with `nNeg > 0`). Start here.
 - `--pulse-year Y` — TIRF vs period for pulse year `Y` across **all** iterations (the

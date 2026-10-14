@@ -31,7 +31,7 @@ solve status (nashstat), and whether a blocking market sits at a variable bound 
 imbalance is trade tension, not a solver limit).
 
 Usage:
-  <python-with-pandas> remind-context/skills/debug-remind-run/scripts/nash_converge.py NASH_CSV [options]
+  <python-with-pandas> .claude/skills/debug-remind-run/scripts/nash_converge.py NASH_CSV [options]
     (default)         --summary
     --summary         worst market surplus per iteration (which market/year drives non-convergence),
                       the convergence trajectory (stall vs oscillation), and the final-iteration

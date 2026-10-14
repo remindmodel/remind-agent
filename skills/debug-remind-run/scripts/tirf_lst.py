@@ -29,7 +29,7 @@ GAMS display shape handled:
 
 Usage (run with a python that has pandas, e.g. the climate-assessment conda env):
   /p/projects/rd3mod/python/environments/climate-assessment/bin/python \
-      remind-context/skills/debug-remind-run/scripts/tirf_lst.py FULL_LST [options]
+      .claude/skills/debug-remind-run/scripts/tirf_lst.py FULL_LST [options]
     (default)            --summary
     --summary            one row per iteration: idx iter lst_line nNonzero nNeg min max allzero
     --iter N             dump the table of iteration N (period x pulse_year), strided for the terminal

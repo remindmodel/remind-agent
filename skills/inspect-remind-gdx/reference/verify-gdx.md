@@ -17,7 +17,7 @@ Shell prep: `source /p/system/modulefiles/defaults/piam/module_load_piam`
 First reach for native tools: `gdxdump <file.gdx>` for the symbol inventory (no records) and
 `dumpgdx <file.gdx> <symbol> "<regex>"` for a few filtered values. Use `gdx_inspect.R` below when you
 need bounded structural analytics (per-dim extent, sparsity, triangularity) on a huge symbol:
-`Rscript remind-context/skills/inspect-remind-gdx/scripts/gdx_inspect.R <file.gdx> [symbol] [--grep=<regex>] [--list]`
+`Rscript .claude/skills/inspect-remind-gdx/scripts/gdx_inspect.R <file.gdx> [symbol] [--grep=<regex>] [--list]`
 - Bare on a model gdx: class-count headline + "narrow it down" hints (safe on `fulldata.gdx`).
 - `--grep=<re>` or an exact `symbol`: filtered inventory + per-symbol deep-dive — dims,
   per-dimension extent, value summary, fill/sparsity, triangularity, adaptive shape map.
