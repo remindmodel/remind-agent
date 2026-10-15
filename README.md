@@ -19,7 +19,7 @@ codebase, loaded by Claude Code through a `CLAUDE.md` pointer (see *Install*).
 
 ## Deployment model
 
-`remind-context` lives **inside** each REMIND checkout as a plain untracked
+`remind-agent` lives **inside** each REMIND checkout as a plain untracked
 clone. A one-line `CLAUDE.md` in the REMIND root points to it; Claude Code
 reads `CLAUDE.md` (not `AGENT.md`) and resolves `@`-imports transitively:
 
