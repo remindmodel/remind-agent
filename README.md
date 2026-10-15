@@ -42,12 +42,12 @@ copy, so pulling this repo updates the context.
 In the root of each REMIND checkout:
 
 ```bash
-git clone https://github.com/tonnrueter/remind-context.git remind-context
-echo '@remind-context/AGENT.md' > CLAUDE.md
-printf 'remind-context/\nCLAUDE.md\n' >> .git/info/exclude
+git clone git@github.com:remindmodel/remind-agent.git remind-agent
+echo '@remind-agent/AGENT.md' > CLAUDE.md
+printf 'remind-agent/\nCLAUDE.md\n' >> .git/info/exclude
 ```
 
-If the checkout already has a `CLAUDE.md`, add the `@remind-context/AGENT.md`
+If the checkout already has a `CLAUDE.md`, add the `@remind-agent/AGENT.md`
 line to it instead of overwriting it.
 
 ## Updating
@@ -55,13 +55,13 @@ line to it instead of overwriting it.
 Pull the latest context into a checkout:
 
 ```bash
-git -C remind-context pull
+git -C remind-agent pull
 ```
 
 ## Editing context
 
 ```bash
-cd remind-context
+cd remind-agent
 git checkout main
 # edit AGENT.md / instructions/*.md / prompts/*.md
 git commit -am "..."
@@ -73,5 +73,5 @@ git push
 Prompts in [`prompts/`](prompts/) are **on-demand**, not auto-loaded.
 
 To invoke one as `/<name>`, add a shim `.claude/commands/<name>.md` in REMIND
-containing `@../../remind-context/prompts/<name>.md`, or just open the prompt
+containing `@../../remind-agent/prompts/<name>.md`, or just open the prompt
 file and paste it.
