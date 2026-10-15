@@ -1,4 +1,4 @@
-# remind-context
+# remind-agent
 
 AI-assistant context files for the [REMIND](https://github.com/remindmodel/remind)
 codebase, loaded by Claude Code through a `CLAUDE.md` pointer (see *Install*).
