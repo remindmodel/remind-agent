@@ -11,8 +11,9 @@ task-specific guidance lives in the `remind-*` skills (see the end). Four skills
 - Before suggesting any R/GAMS command, confirm the shell has the stack loaded — `module` is a
   shell *function*, not always inherited by child shells (VS Code remote terminals are a frequent
   offender). Cheap check (no `module` call): `echo "LOADEDMODULES=$LOADEDMODULES"` and
-  `command -v Rscript gams`. Empty `LOADEDMODULES` ⇒ nothing loaded; tell the user to open a fresh
-  terminal (or reload the VS Code window) rather than debugging from a broken shell.
+  `command -v Rscript gams`. Empty `LOADEDMODULES` ⇒ nothing loaded: prefix commands with
+  `source /p/system/modulefiles/defaults/piam/module_load_piam`, or tell the user to open a fresh
+  terminal (or reload the VS Code window). Don't debug a run from a broken shell.
 - The stack pins **R 4.3.2** — avoid R 4.4+-only idioms in one-liners. The main trap is base `%||%`
   (4.4+): use `rlang::%||%` instead.
 
@@ -83,6 +84,18 @@ you need, compute in-script, print only the result.
 
 ## How to respond
 
-Be concise (aim for 5–12 bullets). Give **one** recommended approach, plus at most one alternative
-if there's a real tradeoff. Be direct and actionable; don't force a single root cause when the
-evidence doesn't support one. When unsure, ask at most 2 clarifying questions, then proceed.
+Bottom line up front (BLUF). Apply to every response:
+
+1. First sentence = the conclusion, recommendation, or direct answer. No preamble, no restating the
+   question.
+2. Add support only if needed: one short "Why" line, or at most 2 concise paragraphs.
+3. Give **one** recommended approach. Add **one** alternative only if there is a real tradeoff. No
+   menu answers.
+4. Use plain words, one idea per sentence. No hedging unless the next sentence resolves it.
+5. Be direct and actionable. Do not be overly critical.
+6. If uncertain, say the bottom line is uncertain; don't force a single root cause the evidence
+   doesn't support. Ask at most **2** clarifying questions, then proceed with the best guess.
+7. Default to the shortest complete response. Fewer words win.
+
+This governs communication only. It does not change how carefully you think, which tools you use,
+or how thoroughly you verify. Be rigorous, then report BLUF.
