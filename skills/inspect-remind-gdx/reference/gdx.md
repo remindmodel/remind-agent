@@ -4,7 +4,7 @@ Applies whenever a `.gdx` file crosses the GAMS/R boundary — inspecting one,
 or changing a script that writes/reads it. Companion playbook:
 `.claude/skills/inspect-remind-gdx/reference/verify-gdx.md`; tool: `.claude/skills/inspect-remind-gdx/scripts/gdx_inspect.R`.
 
-**First reach: native tools** — `gdxdump <file>` (symbol inventory, no records) and
+**First reach: native tools** — `gdxdump <file> Symbols` (symbol inventory, no records; a bare `gdxdump <file>` prints every record) and
 `dumpgdx <file> <symbol> "<regex>"` (filtered values); `gdx_inspect.R` is the escalation for bounded
 structural analytics on a huge symbol. The facts below govern the *content* once you read records.
 

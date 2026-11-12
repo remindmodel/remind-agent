@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 # gdx_inspect.R -- context-safe structural summary of a (potentially huge) GDX file.
 #
-# Why over native tools: `gdxdump <file>` (symbol inventory, no records) and
+# Why over native tools: `gdxdump <file> Symbols` (symbol inventory, no records; a bare `gdxdump <file>` prints every record) and
 # `dumpgdx <file> <sym> "<regex>"` (filtered values) are the first reach. Use THIS when you need
 # bounded structural analytics -- per-dim extent, sparsity, triangularity -- on a huge / (tall,tall)
 # symbol in one shot. (Under review: may retire if the native tools suffice.)

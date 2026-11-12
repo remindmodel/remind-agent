@@ -14,7 +14,7 @@ Shell prep: `source /p/system/modulefiles/defaults/piam/module_load_piam`
   parameter. Output size must be ~O(1) in file size.
 
 ## A. Inspect
-First reach for native tools: `gdxdump <file.gdx>` for the symbol inventory (no records) and
+First reach for native tools: `gdxdump <file.gdx> Symbols` for the symbol inventory (no records) and
 `dumpgdx <file.gdx> <symbol> "<regex>"` for a few filtered values. Use `gdx_inspect.R` below when you
 need bounded structural analytics (per-dim extent, sparsity, triangularity) on a huge symbol:
 `Rscript .claude/skills/inspect-remind-gdx/scripts/gdx_inspect.R <file.gdx> [symbol] [--grep=<regex>] [--list]`

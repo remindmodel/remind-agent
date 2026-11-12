@@ -39,17 +39,22 @@ task-specific guidance lives in four skills that load by task:
 
 ## Temporary files
 
-Agent scratch, intermediate outputs, and scratch scripts go in `scratch/` (inside this context
-dir; create it if absent). Delete temp files when the task is done; if the user asks to keep a
-report, move it out of `scratch/` (it is gitignored). Never scatter temp files elsewhere or in
-`/tmp`.
+Agent scratch, intermediate outputs, and scratch scripts go in `.claude/scratch/` (seen from the
+REMIND root; create it if absent). Never put them in the REMIND root, in `output/`, or in `/tmp`.
+The folder's contents are gitignored. If the user wants to keep a report, ask where it should go.
+
+## Deleting files
+
+**Never delete a file or folder without asking the user first**, including your own temp files in
+`.claude/scratch/`. List what you would remove and wait for a yes. Never use `rm -rf`. Leaving temp
+files in `.claude/scratch/` is fine.
 
 ## Working with data files (filter first, never dump)
 
 Reading large files whole — or pasting full tables — wastes context. Filter to the rows/columns
 you need, compute in-script, print only the result.
 
-- **Native tools before custom scripts.** For a gdx, `gdxdump <file>` (symbol inventory, no
+- **Native tools before custom scripts.** For a gdx, `gdxdump <file> Symbols` (symbol inventory, no
   records) and `dumpgdx <file> <symbol> "<regex>"` (filtered values; always a strong regex) are
   the first reach; read into R with `readGDX()` for larger analyses. The skills' scripts
   are escalations for what the native tools can't do.

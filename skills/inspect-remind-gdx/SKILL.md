@@ -9,7 +9,8 @@ GDX files cross the GAMS↔R boundary. A model gdx (`fulldata.gdx`) has ~1700 sy
 — output must stay bounded regardless of file size.
 
 ## Native tools first
-- `gdxdump <file>` — symbol inventory without records (cheap even on a model gdx).
+- `gdxdump <file> Symbols` — symbol inventory without records (cheap even on a model gdx). A bare
+  `gdxdump <file>` prints every record of every symbol: never run it on a model gdx.
 - `dumpgdx <file> <symbol> "<regex>"` — a few filtered values; **always** a strong regex
   (unfiltered output is huge). Needs the piam module; elsewhere use
   `gdxdump <file> Symb=<symbol> Format=csv | grep -E "<regex>"`.
