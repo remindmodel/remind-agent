@@ -1,7 +1,7 @@
 # Working in this REMIND checkout
 
 REMIND is a GAMS + R integrated assessment model. This file is the always-on base; the deeper,
-task-specific guidance lives in the `remind-*` skills (see the end). Four skills auto-load by task:
+task-specific guidance lives in four skills that load by task:
 `debug-remind-run`, `inspect-remind-gdx`, `configure-remind-scenarios`, `edit-remind-code`.
 
 ## HPC environment
@@ -47,7 +47,7 @@ you need, compute in-script, print only the result.
 
 - **Native tools before custom scripts.** For a gdx, `gdxdump <file>` (symbol inventory, no
   records) and `dumpgdx <file> <symbol> "<regex>"` (filtered values; always a strong regex) are
-  the first reach; read into R with `readGDX()` for larger analyses. The `remind-*` skills' scripts
+  the first reach; read into R with `readGDX()` for larger analyses. The skills' scripts
   are escalations for what the native tools can't do.
 - **Never read `full.lst` / `full.log` / `log.txt` broadly** — grep for a status/error/iteration
   first (`grep -n "Status:" full.log`).
