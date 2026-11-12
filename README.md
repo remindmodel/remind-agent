@@ -21,7 +21,7 @@ auto-load by task, their reference docs and scripts, and optional slash-command 
 The repo **is** the `.claude/` directory. From the root of a REMIND checkout:
 
 ```bash
-git clone https://github.com/tonnrueter/remind-agent.git .claude
+git clone https://github.com/remindmodel/remind-agent.git .claude
 printf '.claude/\n' >> .git/info/exclude     # keep it out of REMIND's git
 rm -f CLAUDE.md                              # drop any stale root CLAUDE.md pointer, if present
 ```
