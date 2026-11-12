@@ -7,6 +7,7 @@ description: Diagnose a failed or non-converged REMIND run from its output folde
 
 Assume you start from a run folder `output/<SCENARIO_TIMESTAMP>/`. Work *inside* it — `full.gms`,
 the gdx files and `cfg.txt` there are what actually ran, which may differ from the repo source.
+No run folder, only log excerpts pasted into the chat? Follow `reference/triage.md` instead.
 
 **Don't anchor on the bottom of the log.** A tail "infeasible"/"Execution error" is often a
 *symptom*, not the root cause — treat it as confirmation, and look earlier (missing inputs,
@@ -121,7 +122,7 @@ If a step in this guide doesn't work where you are (a missing tool, a different 
 suggest a fix to this guide.
 
 ## Reference
-- `reference/triage.md` — triage a failed HPC/Slurm run from `log.txt` excerpts.
+- `reference/triage.md` — no run folder: triage from `log.txt` excerpts the user pastes.
 - `reference/nonconvergence.md` — the full Case F playbook (tool: `scripts/nash_converge.py`).
 - `reference/tirf.md` — corrupted climate impulse response / TIRF spike (tool: `scripts/tirf_lst.py`).
 - `reference/climate-debugging.md` — `log_climate.txt` structure, MAGICC ↔ parset compatibility.
