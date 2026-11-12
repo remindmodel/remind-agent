@@ -3,6 +3,7 @@
 REMIND is a GAMS + R integrated assessment model. This file is the always-on base; the deeper,
 task-specific guidance lives in four skills that load by task:
 `debug-remind-run`, `inspect-remind-gdx`, `configure-remind-scenarios`, `edit-remind-code`.
+A fifth, `write-handoff`, runs only when the user asks (`/write-handoff`).
 
 ## HPC environment
 
@@ -42,6 +43,10 @@ task-specific guidance lives in four skills that load by task:
 Agent scratch, intermediate outputs, and scratch scripts go in `.claude/scratch/` (seen from the
 REMIND root; create it if absent). Never put them in the REMIND root, in `output/`, or in `/tmp`.
 The folder's contents are gitignored. If the user wants to keep a report, ask where it should go.
+
+Handoff notes (`.claude/scratch/HANDOFF-<date>-<topic>.md`, written by `/write-handoff`) carry work
+between sessions. When the user mentions a handoff or picking up earlier work, read the newest
+matching one first. Never delete or overwrite a handoff note.
 
 ## Deleting files
 

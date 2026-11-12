@@ -13,6 +13,8 @@ auto-load by task, their reference docs and scripts, and optional slash-command 
   - `inspect-remind-gdx` — inspect a gdx / verify a gdx writer change.
   - `configure-remind-scenarios` — author/review scenario configs.
   - `edit-remind-code` — read/change GAMS/R code, compile-after-edit, pik-piam/renv.
+  - `write-handoff` — only on request (`/write-handoff <topic>`): writes
+    `scratch/HANDOFF-<date>-<topic>.md` so a later session can pick up the work.
 - `commands/` — optional `/shortcuts` that jump straight into a skill's playbook.
 - `scratch/` — working dir for agent temp files (contents gitignored).
 
