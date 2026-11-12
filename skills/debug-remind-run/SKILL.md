@@ -23,6 +23,8 @@ Cross-check two sources; if they disagree, trust `log.txt`.
 - **`log.txt` keywords:** `Creating full.gms` (R pre-processing done, GAMS compiling — compile
   errors flagged just below) → `Starting REMIND...` (GAMS compiled & started) → `REMIND run
   finished!` (read the `Model summary` below it).
+- **No piam module (not on the cluster):** the `Model summary` at the end of `log.txt` carries most
+  of what `rs` shows. See "Without the piam tools" below.
 - **First, scan the tail for `CANCELLED` / `SIGNAL Terminated`** — if present, GAMS was killed
   externally (walltime, OOM, node failure). Report as an infra/timeout issue; no further
   classification needed.
@@ -98,6 +100,25 @@ the climate target is infeasible, which is the real reason the markets won't cle
 ## Tools (piam module)
 `rs -f <run>` (status) · `nashstat` / `nashstat -a` (modelstat per region, last iteration) ·
 `listinfes` (first infeasible equation) · `dumpgdx` / `readGDX` for exact values.
+
+## Without the piam tools (laptop, copied run folder)
+
+| cluster tool | use instead |
+|---|---|
+| `rs -f <run>` | `grep -n -A25 "Model summary" log.txt`: run time, which gdx files exist, modelstat, `full.log` status, infeasibilities (`nashstat -F` output), failed markets and taxes. Missing if the run was killed before the end |
+| `nashstat` | `gdxdump fulldata.gdx Symb=p80_repy Format=csv`: modelstat and solvestat per region, last iteration |
+| `listinfes` | the infeasibility list in the `Model summary`. No summary: say this step needs the cluster |
+| `dumpgdx <file> <symbol> "<regex>"` | `gdxdump <file> Symb=<symbol> Format=csv \| grep -E "<regex>"`, or `readGDX()` in R |
+
+`gdxdump` comes with GAMS and must be on the PATH; if it isn't, ask the user where GAMS is installed.
+
+A run copied from the cluster needs at least `log.txt`, `cfg.txt`, `main.lst` and whichever of
+`fulldata.gdx`, `non_optimal.gdx`, `abort.gdx` exists. Add `full.lst` (large) for execution errors
+and infeasibilities, `nash_info_convergence.csv` for non-convergence. Ask the user for a missing
+file instead of guessing.
+
+If a step in this guide doesn't work where you are (a missing tool, a different path), say so and
+suggest a fix to this guide.
 
 ## Reference
 - `reference/triage.md` — triage a failed HPC/Slurm run from `log.txt` excerpts.

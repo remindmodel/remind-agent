@@ -7,8 +7,9 @@ converge" (that is a tuning/scenario decision for the run's owner) — it is to 
 region won't settle, whether it is oscillating or just slow, whether the cause is economic (a binding
 bound / trade tension) or numeric (a region's solver), and whether the run's answer is usable anyway.**
 
-Shell: the gdx steps need the piam module (`source /p/system/modulefiles/defaults/piam/module_load_piam`)
-for `dumpgdx` / `nashstat`. The CSV tool needs a python with pandas
+Shell: on the cluster the gdx steps need the piam module (`source /p/system/modulefiles/defaults/piam/module_load_piam`)
+for `dumpgdx` / `nashstat`. Elsewhere use `gdxdump` and `p80_repy` instead (debug-remind-run
+SKILL.md, "Without the piam tools"). The CSV tool needs a python with pandas
 (`/p/projects/rd3mod/python/environments/climate-assessment/bin/python`).
 
 ## Tools
@@ -62,7 +63,7 @@ for `dumpgdx` / `nashstat`. The CSV tool needs a python with pandas
    `damage`/`taxconv` criteria are unmet and GMT deviation is high, the climate/damage loop itself has
    not settled and the result is *not* reliable.
 
-## dumpgdx cheat-sheet (all on `<run>/fulldata.gdx`)
+## dumpgdx cheat-sheet (all on `<run>/fulldata.gdx`; without piam: `gdxdump fulldata.gdx Symb=<symbol> Format=csv`)
 - `p80_messageShow ".*"` — which criteria unmet (step 2)
 - `p80_messageFailedMarket ".*"` — failing (year, market) cells (step 3)
 - `p80_surplusMaxTolerance ".*"` — per-market tolerance (set by `cm_nash_autoconverge`: 2 = fine/prod)

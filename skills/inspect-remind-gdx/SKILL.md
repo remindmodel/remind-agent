@@ -11,7 +11,8 @@ GDX files cross the GAMS↔R boundary. A model gdx (`fulldata.gdx`) has ~1700 sy
 ## Native tools first
 - `gdxdump <file>` — symbol inventory without records (cheap even on a model gdx).
 - `dumpgdx <file> <symbol> "<regex>"` — a few filtered values; **always** a strong regex
-  (unfiltered output is huge). Needs the piam module.
+  (unfiltered output is huge). Needs the piam module; elsewhere use
+  `gdxdump <file> Symb=<symbol> Format=csv | grep -E "<regex>"`.
 - R `readGDX()` / gamstransfer `Container$read(path, symbols = name)` — larger filtered analyses;
   compute in-script, print only the result.
 - Escalate to `scripts/gdx_inspect.R` only for bounded structural analytics (per-dim extent,
