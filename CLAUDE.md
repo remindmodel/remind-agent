@@ -6,6 +6,10 @@ task-specific guidance lives in four skills that load by task:
 
 ## HPC environment
 
+- **First check that you are on the cluster:** `test -d /p/projects && echo cluster`. If not, there
+  is no piam module: skip `module load piam` and the shell checks below, and expect `rs`,
+  `nashstat`, `listinfes` and `dumpgdx` to be missing. Work from the run folder's own files, and
+  tell the user which step needs the cluster.
 - **Load the piam module** before running most HPC workflows: `module load piam`. Required for
   `dumpgdx`, `rs`, `listinfes`, `nashstat`, and other REMIND/PIK utilities.
 - Before suggesting any R/GAMS command, confirm the shell has the stack loaded — `module` is a
